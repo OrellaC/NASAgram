@@ -1,0 +1,20 @@
+#nasa-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  row-gap: 1.5rem;
+}
+
+.nasa-data {
+  width: 30%;
+  /* background-color: lightcoral; */
+  border: 1px solid black;
+}
+
+.nasa-img {
+  width: 100%;
+}
+
+.heart{
+  width: 2rem;
+}
