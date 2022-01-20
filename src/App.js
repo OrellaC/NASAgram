@@ -1,101 +1,34 @@
-import { useState } from 'react'
-import axios from 'axios'
-import Nasadata from './Components/NASAData'
-import NASAData from './Components/NASAData'
+// imports
+import React, { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+// components
+import Nav from './Components/Nav'
+import Footer from './Components/Footer.js'
+// pages
+import Home from './pages/Home'
+import NASAList from './pages/NASAList.js'
+import About from './pages/About'
+import Giphy from './pages/Giphy.js'
+// css
 import './App.css'
 
-
-
-
-//function expressions "const app = () =>"
-
-// function declaration 
 function App() {
-
-  //functional components are considered stateless 
-  //class components are considered stateful 
-
-  //write state toward the very top of your component
-  //1.) import useState at the top of your code 
-  //2.) First argument = the name of your state 
-  //3.) Second argument = your method to update your state
-  // EXAMPLE --- const[state, setState] = useState(initialState)
-
-  const [like, setLike] = useState(['unliked'])
-  const [userInput, setUserInput] = useState('')
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  //In functional components we no longer have to use the keyword "this". You just call it {name of state }
-
-  const toggle = () => {
-    console.log('toggling')
-
-    //this is a ternary function 
-    // data === 'unliked' ? setData('liked') : setData('unliked')
-
-    // regular if/else statement 
-    if (like === 'unliked') {
-      setLike('liked')
-    } else {
-      setLike('unliked')
-    }
-  }
-
-  const handleChange = (e) => {
-    // console.log('handling change', e.target.value)
-    setUserInput(e.target.value)
-  }
-
-  const handleSubmit = e => {
-    //any AJAX calls/HTTP REQUEST using axios/fetch wil return a Promise => response 
-    e.preventDefault()
-    console.log('submitting')
-    axios.get(`https://images-api.nasa.gov/search?q=${userInput}`)
-      //whenever we get a response back, only then will then() run 
-      //We no longer need to use json()
-      .then(response => setData(response.data.collection.items))
-      // .then(data => this.setState({userInput: data}))
-      .catch(err => console.error(err))
-
-  }
-
   return (
     <div className="App">
-      <h1>NASAgram</h1>
-      {console.log('state', data)}
-      {/* CONTROLLED FORM - meaning handle our change via state */}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='userInput'>Search: </label>
-        <input
-          type='text'
-          id='userInput'
-          name='userInput'
-          onChange={handleChange}
-          value={userInput}
-        />
-        <input type="submit" value='submit' />
-      </form>
-      {/* 
-      <button onClick={toggle}>{like}</button> */}
+      <Nav />
+      
+      {/* The component that changes in our browser is inside the Routes component */}
 
-      {loading
-        ?
-        <img src="https://c.tenor.com/tEBoZu1ISJ8AAAAC/spinning-loading.gif" alt="" />
-        :
-        <div id='nasa-container'>
-          {
-            data.map((item) => {
-              return (
-                <NASAData item={item} />
-              )
-            })
-          }
-        </div>
-      }
+      <Routes>
+        <Route path='nasalist' element={<NASAList />} />
+        <Route path='/' element={<Home />} />
+        <Route path='about' element={<About />} />
+        <Route path='giphy' element={<Giphy />} />
+      </Routes>
 
-
-
+      <Footer />
+      
+      {/* <Outlet /> */}
     </div>
   );
 }
