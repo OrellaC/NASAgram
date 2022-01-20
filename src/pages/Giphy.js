@@ -1,36 +1,55 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 
 const Giphy = () => {
-    
-    const [gifURL, setGifURL] = useState('');
+    const [gifURL, setGifURL] = useState('')
 
+    // try/catch and async/await
+    // try/catch - tells our code to run the block of code and not break our application
+    const fetchGif = async () => {
+        try {
+            // AJAX call
+            // async/await is syntactical sugar for our thennables
+            // we need the keyword async in front of our function
+            // we create a variable that will hold our response
+            // await can only be used inside an async function in regular JS
+            // await replaces our then()
+            const response = await axios.get('https://api.giphy.com/v1/gifs/random?api_key=MVcXXam6XOGmVb4QxFKzbzJf4GIhRyd9&tag=&rating=g')
 
-    const handleClick = () => {
+            setGifURL(response.data.data.images.original.url)
 
-        axios.get('https://api.giphy.com/v1/gifs/random?api_key=bhjTu6l5hxEEJkzwqsfarzGbMA6SCFBG&tag=&rating=g')
-            .then(res => setGifURL(res.data.data.images.original.url))
-            .catch(err => console.log(err))
+        } catch (error) {
+            console.error(error)
+        } 
+
+        // using thennables
+        // axios.get('https://api.giphy.com/v1/gifs/random?api_key=MVcXXam6XOGmVb4QxFKzbzJf4GIhRyd9&tag=&rating=g')
+        // .then((response) => {
+        //     setGifURL(response.data.data.images.original.url)
+        // })
+        // .catch(err => console.err(err))
     }
+    // console.log('state', gifURL)
 
+    // useEffect is a React hook we have to import
+    // It takes in two arguments
+    // first argument is the function, second argument is our dependency array
+    useEffect(() => {
+        // console.log('We mounted')
 
-    //setData(res.data.data.image.original.mp4))
+        fetchGif()
+        // An empty dependency array allows us to call our useEffect once only
+        // any dependency you pass inside our dependency array will tell our component to listen for changes in those dependencies
+    }, [])
 
     return (
-
-        <div className="container">
-            <div className="App-header">
-                <h1>Here's a Gif</h1>
-
-                {/* On Button click make an API call and retrieve/render a single random GIF */}
-                <button onClick={handleClick}>Gif Generator</button>
-                {
+        <div>
+            <button onClick={fetchGif}>Random</button>
+            {
                 gifURL && <img src={gifURL} alt="random gif" />
-                }
-            </div>
+            }
         </div>
     );
 }
-
 
 export default Giphy;

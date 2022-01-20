@@ -84,7 +84,7 @@ const NASAlist = () => {
                         data.map((item) => {
                             return (
                              
-                                 <NASAData key={item.data[0].nasa_id} /> 
+                                 <NASAData key={item.data[0].nasa_id}  item={item} /> 
                               
                             )
                         })

@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../contexts/UserContext'
 
 const About = () => {
+    const user = useContext(UserContext)
+
+    console.log('About', user)
+
+    user.setUser('Evan')
     return (
         <div>
-          This is my about page
+            <p>
+                THIS IS ABOUT PAGE
+            </p>
+            {
+                user.user === 'David'
+                ? 'HELLO DAVID'
+                : 'HELLO EVAN'
+            }
         </div>
     );
 }

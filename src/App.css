@@ -1,4 +1,4 @@
-#nasa-container {
+/* #nasa-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -8,7 +8,7 @@
 .nasa-data {
   width: 30%;
   /* background-color: lightcoral; */
-  border: 1px solid black;
+  /* border: 1px solid black;
 }
 
 .nasa-img {
@@ -17,4 +17,4 @@
 
 .heart{
   width: 2rem;
-}
+} */ 
